@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="tarefasApp">
+    <head>
+        <title>Tarefas</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="container">
+        <div class="col-md-4" ng-controller="TarefasCtrl">
+            <h1>Tarefas</h1>
+            <ul class="list-group">                        
+                <li ng-repeat="tarefa in tarefas" class="list-group-item" ng-class="{'list-group-item-success': tarefa.concluida, 'list-group-item-danger': !tarefa.concluida}" ng-click="alteraStatus($index)">{{tarefa.nome}}</li>
+            </ul>    
+            <input class="form-control" type="text" ng-model="novaTarefa" />
+            <button class="btn btn-primary" type="button" ng-click="adicionarTarefa()">Adicionar</button>
+        </div>
+        
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script>
+            var app = angular.module('tarefasApp', []);
+            app.controller('TarefasCtrl', function($scope) {
+                $scope.tarefas = [];
+
+                $scope.adicionarTarefa = function() {
+                    $scope.tarefas.push({nome: $scope.novaTarefa, concluida: false});
+                    $scope.novaTarefa = "";
+                };
+
+                $scope.alteraStatus = function(index) {
+                    $scope.tarefas[index].concluida = !$scope.tarefas[index].concluida;
+                };
+            });
+        </script>
+    </body>
+</html>
